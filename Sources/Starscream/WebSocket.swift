@@ -115,7 +115,7 @@ open class WebSocket: WebSocketClient, EngineDelegate {
         self.engine = engine
     }
     
-    public convenience init(request: URLRequest,test: String, certPinner: CertificatePinning? = FoundationSecurity(), compressionHandler: CompressionHandler? = nil, useCustomEngine: Bool = true) {
+    public convenience init(request: URLRequest, certPinner: CertificatePinning? = FoundationSecurity(), compressionHandler: CompressionHandler? = nil, useCustomEngine: Bool = true) {
         if #available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *), !useCustomEngine {
                 debugPrint("ios 13+")
             self.init(request: request, engine: NativeEngine())
