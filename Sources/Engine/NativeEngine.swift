@@ -12,13 +12,20 @@ import Foundation
 public class NativeEngine: NSObject, Engine, URLSessionDataDelegate, URLSessionWebSocketDelegate {
     private var task: URLSessionWebSocketTask?
     weak var delegate: EngineDelegate?
+    private var configuration = URLSessionConfiguration.default
+    
+    public init(configuration: URLSessionConfiguration?) {
+        if let configuration = configuration {
+            self.configuration = configuration
+        }
+    }
 
     public func register(delegate: EngineDelegate) {
         self.delegate = delegate
     }
 
     public func start(request: URLRequest) {
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
+        let session = URLSession(configuration: self.configuration, delegate: self, delegateQueue: nil)
         task = session.webSocketTask(with: request)
         doRead()
         task?.resume()
